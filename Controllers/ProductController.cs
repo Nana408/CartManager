@@ -8,6 +8,9 @@ using System.ComponentModel.Design;
 
 namespace CartManagmentSystem.Controllers
 {
+    /// <summary>
+    /// Controller for managing products.
+    /// </summary>
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
@@ -15,13 +18,18 @@ namespace CartManagmentSystem.Controllers
     {
         private readonly IProduct _productRepository;
 
+        /// <summary>
+        /// Constructor for ProductController class.
+        /// </summary>
         public ProductController()
         {
             _productRepository = new ProductsPrepository(new Entities.CartManagementSystemContext());
-
         }
 
-
+        /// <summary>
+        /// Retrieves products.
+        /// </summary>
+        /// <returns>An IActionResult representing the HTTP response.</returns>
         [HttpGet("GetProducts")]
         public IActionResult GetProducts()
         {
@@ -33,7 +41,7 @@ namespace CartManagmentSystem.Controllers
             int logId = UserFunctions.InsertLog(ipAddress, actionName, companyName, requestBody);
             try
             {
-                bool worked = _productRepository.GetProducts(logId,out List<ProductData> products, out string savedMessage);
+                bool worked = _productRepository.GetProducts(logId, out List<ProductData> products, out string savedMessage);
 
                 if (worked)
                 {
@@ -53,7 +61,6 @@ namespace CartManagmentSystem.Controllers
                 Task.Factory.StartNew(() => UserFunctions.UpdateLogs(logId, StaticVariables.EXCEPTIONSTATUS, CompanyID, ex.Message + "||" + ex.StackTrace, companyName));
                 var error = new { Status = StaticVariables.EXCEPTIONSTATUS, Message = StaticVariables.EXCEPTIONMESSAGE };
                 return StatusCode(500, error);
-
             }
         }
     }

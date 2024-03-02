@@ -7,18 +7,32 @@ using System.Text;
 
 namespace CartManagmentSystem.Models
 {
+    /// <summary>
+    /// Handler for basic authentication.
+    /// </summary>
     public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {
+        /// <summary>
+        /// Constructor for BasicAuthenticationHandler class.
+        /// </summary>
+        /// <param name="options">Authentication scheme options.</param>
+        /// <param name="logger">Logger instance.</param>
+        /// <param name="encoder">UrlEncoder instance.</param>
+        /// <param name="clock">SystemClock instance.</param>
         public BasicAuthenticationHandler(
             IOptionsMonitor<AuthenticationSchemeOptions> options,
             ILoggerFactory logger,
             UrlEncoder encoder,
             ISystemClock clock
-            ) : base(options, logger, encoder, clock)
+        ) : base(options, logger, encoder, clock)
         {
 
         }
 
+        /// <summary>
+        /// Handles authentication asynchronously.
+        /// </summary>
+        /// <returns>An AuthenticateResult representing the outcome of the authentication process.</returns>
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
             if (!Request.Headers.ContainsKey("Authorization"))
@@ -54,7 +68,7 @@ namespace CartManagmentSystem.Models
             catch (Exception)
             {
 
-                return AuthenticateResult.Fail("Error has occured");
+                return AuthenticateResult.Fail("Error has occurred");
 
             }
         }

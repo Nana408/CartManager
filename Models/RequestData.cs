@@ -8,6 +8,13 @@
         public int Quantity { get; set; }
     }
 
+    public class CartItemData
+    {
+        public int UserId { get; set; }
+        public int ProductId { get; set; }
+        public int Quantity { get; set; }
+    }
+
     public class CartContainer
     {
         public int CartId { get; set; }
@@ -25,7 +32,6 @@
 
     public class RemoveItem
     {
-        public int CartId { get; set; }
         public int UserId { get; set; }
         public int ProductId { get; set; }
     
